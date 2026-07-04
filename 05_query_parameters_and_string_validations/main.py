@@ -22,10 +22,7 @@ async def root():
 
 @app.get("/items/")
 async def read_items(
-    q: Annotated[str | None, Query(
-        title="Query",
-        description= "Query string for items to search in the database that have good match", 
-        min_length=3)] = None):
+    q: Annotated[str | None, Query(alias="item-query")] = None):
     results = {"items": [
         {"item_id": "Foo"},
         {"item_id": "Bar"}

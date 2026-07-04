@@ -24,7 +24,7 @@ async def root():
 async def read_items(
     q: Annotated[
         list[str] | None, Query()
-        ] = None):
+        ] = ["foo", "bar"]):
     # results = {"items": [
     #     {"item_id": "Foo"},
     #     {"item_id": "Bar"}

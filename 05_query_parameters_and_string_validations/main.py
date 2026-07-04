@@ -38,5 +38,5 @@ async def read_items(id: Annotated[str | None, AfterValidator(chack_valid_id)] =
     if id:
         item = data.get(id)
     else:
-        id, item = random.choice(list(data.item()))
+        id, item = random.choice(list(data.items()))
     return {"id": id, "name": item}

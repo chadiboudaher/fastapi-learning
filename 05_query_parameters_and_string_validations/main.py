@@ -23,12 +23,11 @@ async def root():
 @app.get("/items/")
 async def read_items(
     q: Annotated[
-        str | None, Query(min_length=3, max_length=50)
-        ]):
-    results = {"items": [
-        {"item_id": "Foo"},
-        {"item_id": "Bar"}
-    ]}
-    if q:
-        results.update({"q": q})
-    return results
+        list[str] | None, Query()
+        ] = None):
+    # results = {"items": [
+    #     {"item_id": "Foo"},
+    #     {"item_id": "Bar"}
+    # ]}
+    query_items = {"q": q}
+    return query_items

@@ -24,7 +24,8 @@ async def update_item(
     item_id: int,
     item: Item,
     user: User,
-    importance: Annotated[int, Body()]
+    importance: Annotated[int, Body()],
+    q: str | None = None
 ):
     results = {
         "item_id": item_id,
@@ -32,4 +33,6 @@ async def update_item(
         "item": item,
         "importance": importance
         }
+    if q:
+        results.update({"q": q})
     return results

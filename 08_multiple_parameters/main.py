@@ -10,9 +10,9 @@ class Item(BaseModel):
     price: float
     tax: float | None = None
 
-class User(BaseModel):
-    username: str
-    full_name: str | None = None
+# class User(BaseModel):
+#     username: str
+#     full_name: str | None = None
 
 
 @app.get("/")
@@ -22,17 +22,17 @@ async def root():
 @app.put("/items/{item_id}") # Update
 async def update_item(
     item_id: int,
-    item: Item,
-    user: User,
-    importance: Annotated[int, Body()],
-    q: str | None = None
+    item: Annotated[Item, Body(embed=True)],
+    # user: User,
+    # importance: Annotated[int, Body()],
+    # q: str | None = None
 ):
     results = {
         "item_id": item_id,
-        "user": user,
+        # "user": user,
         "item": item,
-        "importance": importance
+        # "importance": importance
         }
-    if q:
-        results.update({"q": q})
+    # if q:
+    #     results.update({"q": q})
     return results

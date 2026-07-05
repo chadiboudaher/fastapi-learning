@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, Path, Body
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -23,11 +23,13 @@ async def root():
 async def update_item(
     item_id: int,
     item: Item,
-    user: User
+    user: User,
+    importance: Annotated[int, Body()]
 ):
     results = {
         "item_id": item_id,
         "user": user,
-        "item": item
+        "item": item,
+        "importance": importance
         }
     return results

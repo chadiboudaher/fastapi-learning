@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 app = FastAPI()
 
 class Image(BaseModel):
-    url: str
+    url: HttpUrl
     name: str
 
 class Item(BaseModel):
@@ -13,7 +13,13 @@ class Item(BaseModel):
     price: float
     tax: float | None = None
     tags: set[str] = []
-    image: Image | None = None
+    image: list[Image] | None = None
+
+class Offer(BaseModel):
+    name: str
+    description: str | None = None
+    price: float
+    items: list[Item]
 
 @app.get("/")
 async def root():

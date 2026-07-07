@@ -1,7 +1,7 @@
 from typing import Annotated, Any
 
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 app = FastAPI()
 
@@ -11,6 +11,17 @@ class Item(BaseModel):
     price: float
     tax: float | None = None
     tags: list[str] = []
+
+class UserIn(BaseModel):
+    username: str
+    password: str
+    email: EmailStr
+    full_name: str | None = None
+
+class UserOut(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: str | None = None
 
 @app.get("/")
 async def root():
@@ -26,3 +37,7 @@ async def read_items() -> Any:
         Item(name="Portal Gun", price=42.0),
         Item(name="Plumbus", price=32.0)
     ]
+
+@app.post("/user/", response_model=UserOut)
+async def create_user(user: UserIn) -> Any:
+    return user

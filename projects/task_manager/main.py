@@ -42,3 +42,15 @@ async def get_tasks(
     tasks = db.get_all(x_user_id, skip, limit, status)
     return tasks
 
+@app.get("/tasks/{task_id}")
+async def get_task(
+    task_id: int,
+    x_user_id: Annotated[int, Header(..., description="User ID for authentication")]
+):
+    task = db.get_one(task_id, x_user_id)
+    if not task:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Task with ID {task_id} not found"
+        )
+    return task

@@ -42,3 +42,17 @@ class TaskDB:
             return task
         return None
 
+    def update(self, 
+               task_id: int,
+               user_id: int,
+               task_update: TaskUpdate) -> Optional[dict]:
+        task = self.get_one(task_id=task_id,
+                            user_id=user_id)
+        if not task:
+            return None
+        
+        update_data = task_update.dict(exclude_unset=True)
+        for key, value in update_data.item():
+            task[key] = value
+        task["updated_at"] = datetime.now()
+        return task

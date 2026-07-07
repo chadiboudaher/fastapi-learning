@@ -18,7 +18,7 @@ async def root():
 @app.post("/tasks/", response_model=TaskResponse, status_code=201)
 async def create_task(
     task: TaskUpdate,
-    x_user_id: Annotated[int, Header(description="User id for auth")]
+    x_user_id: Annotated[int, Header(..., description="User id for auth")]
 ):
     """
     Create a new task for authenticated user
@@ -31,3 +31,14 @@ async def create_task(
 
     new_task = db.create(x_user_id, task)
     return new_task
+
+@app.get("/tasks/")
+async def get_tasks(
+    x_user_id: Annotated[int, Header(..., description="User ID for authentication")],
+    skip: int = Query(0, ge=0, description="Number of tasks to skip"),
+    limit: int = Query(10, ge=1, le=100, description="Max tasks to return"),
+    status: Optional[Status] = Query(None, description="Filter by status")
+):
+    tasks = db.get_all(x_user_id, skip, limit, status)
+    return tasks
+

@@ -54,3 +54,17 @@ async def get_task(
             detail=f"Task with ID {task_id} not found"
         )
     return task
+
+@app.put("/tasks/{task_id}")
+async def update_task(
+    task_id: int,
+    task_update: TaskUpdate,
+    x_user_id: Annotated[int, Header(..., description="User ID for authentication")]
+):
+    update_task = db.update(task_id, x_user_id, task_update)
+    if not update_task:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Task with ID {task_id} not found"
+        )
+    return update_task

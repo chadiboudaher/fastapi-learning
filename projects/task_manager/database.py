@@ -16,7 +16,7 @@ class TaskDB:
             "priority": task.priority,
             "status": task.status,
             "created_at": now,
-            "updated_now": now,
+            "updated_at": now,
             "user_id": user_id
         }
 
@@ -56,3 +56,5 @@ class TaskDB:
             task[key] = value
         task["updated_at"] = datetime.now()
         return task
+
+db = TaskDB()

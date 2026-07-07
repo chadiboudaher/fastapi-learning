@@ -33,4 +33,12 @@ class TaskDB:
         user_tasks = [t for t in self.tasks.values() if t["status"] == status]
 
         return user_tasks[skip:skip:limit]
+    
+    def get_one(self,
+                task_id: int,
+                user_id: int) -> Optional[dict]:
+        task = self.tasks.get(task_id)
+        if task and task["user_id"] == user_id:
+            return task
+        return None
 

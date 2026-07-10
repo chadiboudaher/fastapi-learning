@@ -1,18 +1,16 @@
 # We create an engine, which we use to connect to a database.
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
 
 engine = create_engine('sqlite:///mydatabase.db', echo=True)
 
-conn = engine.connect()
+meta = MetaData()
 
+people = Table(
+    "people",
+    meta,
+    Column("id", Integer, primary_key=True),
+    Column("name", String, nullable=False),
+    Column("age", Integer)
+)
 
-conn.execute(text("CREATE TABLE IF NOT EXISTS people (name str, age int)"))
-
-# To persist the changes
-conn.commit()
-
-from sqlalchemy.orm import Session
-
-session = Session(engine)
-session.execute(text('INSERT INTO PEOPLE (name, age) VALUES ("Mike", 30)'))
-session.commit()
+meta.create_all(engine)

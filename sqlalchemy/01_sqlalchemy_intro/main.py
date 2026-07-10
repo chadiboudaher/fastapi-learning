@@ -14,3 +14,9 @@ people = Table(
 )
 
 meta.create_all(engine)
+
+conn = engine.connect()
+
+insert_statement = people.insert().values(name="Mike", age=30)
+result = conn.execute(insert_statement)
+conn.commit()

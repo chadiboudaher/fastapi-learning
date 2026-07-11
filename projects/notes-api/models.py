@@ -8,20 +8,24 @@ class UserBase(BaseModel):
     email: EmailStr
     full_name: Optional[str] = None
 
-# UserCreate - it is the addition of password to userbase 
 class UserCreate(UserBase):
+    """ Used when creating a new user """
     password: str
 
-# UserOut -
 class UserOut(UserBase):
+    """ What the user receives """
     id: int
     created_at: datetime
 
 class UserUpdate(BaseModel):
+    """ Used when updating a user """    
     username: Optional[str] = None
-    email: Optional[str] = None
+    email: Optional[EmailStr] = None
     full_name: Optional[str] = None
     password: Optional[str] = None
 
 class UserInDB(UserBase):
+    """ Internal user model """
+    id: int
     hashed_password: str
+    created_at: datetime

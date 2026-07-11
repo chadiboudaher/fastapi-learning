@@ -2,7 +2,8 @@ from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import Optional
 
-# UserBase - contain the information for the user except password
+
+# ---- USer Models ----
 class UserBase(BaseModel):
     username: str
     email: EmailStr
@@ -28,4 +29,14 @@ class UserInDB(UserBase):
     """ Internal user model """
     id: int
     hashed_password: str
+    disabled: bool = False
     created_at: datetime
+
+
+# ---- Notes models ----
+
+class NoteBase(BaseModel):
+    title: str
+    content: str
+    is_public: bool = False
+

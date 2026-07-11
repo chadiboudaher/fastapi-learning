@@ -16,3 +16,12 @@ class UserCreate(UserBase):
 class UserOut(UserBase):
     id: int
     created_at: datetime
+
+class UserUpdate(BaseModel):
+    username: Optional[str] = None
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    password: Optional[str] = None
+
+class UserInDB(UserBase):
+    hashed_password: str

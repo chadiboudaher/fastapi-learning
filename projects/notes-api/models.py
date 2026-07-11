@@ -40,3 +40,16 @@ class NoteBase(BaseModel):
     content: str
     is_public: bool = False
 
+class NoteCreate(NoteBase):
+    pass
+
+class NoteUpdate(BaseModel):
+    title: Optional[str] = None
+    content: Optional[str] = None
+    is_public: Optional[bool] = None
+
+class NoteOut(NoteBase):
+    id: int
+    username: str
+    created_at: datetime
+    updated_at: datetime

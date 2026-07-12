@@ -53,3 +53,12 @@ class NoteOut(NoteBase):
     username: str
     created_at: datetime
     updated_at: datetime
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    username: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None

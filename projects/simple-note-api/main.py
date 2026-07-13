@@ -33,3 +33,22 @@ async def read_note(note_id: int,
         raise HTTPException(status_code=404,
                             detail="Note not found")
     return db_note
+
+@app.put("/notes/(note_id)", response_model=schemas.NoteOut)
+async def update_note(note_id: int,
+                      note: schemas.NoteCreate,
+                      conn: Connection = Depends(get_conn)):
+    db_note = crud.update_note(conn, note_id, note)
+    if db_note is None:
+        raise HTTPException(status_code=404,
+                            detail="Note not found")
+    return db_note
+
+@app.delete("/notes/{note_id}")
+async def delete_note(note_id: int,
+                      conn: Connection = Depends(get_conn)):
+    db_note = crud.delete(conn, note_id)
+    if db_note is None:
+        raise HTTPException(status_code=404,
+                            detail="Note not found")
+    return {"message": "Note deleted"}

@@ -3,7 +3,7 @@ from sqlalchemy.engine import Connection
 from database import notes
 import schemas
 
-def create_notes(conn: Connection, 
+def create_note(conn: Connection, 
                  note: schemas.NoteCreate, 
                  user_id: int):
     stmt = insert(notes).values(
